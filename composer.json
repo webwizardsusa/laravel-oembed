@@ -1,0 +1,64 @@
+{
+  "name": "webwizardsusa/laravel-oembed",
+  "description": "Generate external embed code from a URL via the oembed protocol",
+  "keywords": [
+    "laravel-oembed",
+    "laravel",
+    "oembed",
+    "webwizardsusa"
+  ],
+  "homepage": "https://github.com/webwizardsusa/laravel-oembed",
+  "support": {
+    "issues": "https://github.com/webwizardsusa/laravel-oembed/issues",
+    "source": "https://github.com/webwizardsusa/laravel-oembed"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jamie Holly",
+      "email": "jamie@webwizardsusa.com",
+      "homepage": "https://webwizardsusa.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "illuminate/support": "^10.0|^11.0",
+    "illuminate/http": "^10.0|^11.0",
+    "illuminate/contracts": "^10.0|^11.0",
+    "ext-dom": "*"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^8.0|^9.0",
+    "pestphp/pest": "^2.0",
+    "friendsofphp/php-cs-fixer": "^3.64"
+  },
+  "autoload": {
+    "psr-4": {
+      "Webwizardsusa\\OEmbed\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Webwizardsusa\\OEmbed\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/pest",
+    "format": "vendor/bin/php-cs-fixer fix --config=.php_cs.dist.php"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Webwizardsusa\\OEmbed\\OEmbedServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}

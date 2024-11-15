@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "type": "rich",
+  "provider_name": "SoundCloud",
+  "provider_url": "https:\/\/soundcloud.com",
+  "height": 400,
+  "width": "100%",
+  "title": "Want U - Bloom by Bloom",
+  "description": "Hello!! \n\nOUT NOW ON ALL STREAMING PLATFORMS\nhttps:\/\/open.spotify.com\/track\/63wtIEx3vPlzgzjrGg7Kql?si=8cb6d9ec1a684ee4\n\nI'm trying to put out a tune every few weeks <3, I've been enjoying producing, DJing and getting to know everyone so much it's inspiring me every day.\n\nHope you like this one <3\n\nIt'll be on Spotify October 5th!",
+  "thumbnail_url": "https:\/\/i1.sndcdn.com\/artworks-dC20v0UaN0lXJW0t-6Cc97A-t500x500.jpg",
+  "html": "<iframe width=\"100%\" height=\"400\" scrolling=\"no\" frameborder=\"no\" src=\"https:\/\/w.soundcloud.com\/player\/?visual=true&url=https%3A%2F%2Fapi.soundcloud.com%2Ftracks%2F1922592557&show_artwork=true\"><\/iframe>",
+  "author_name": "Bloom",
+  "author_url": "https:\/\/soundcloud.com\/bloomukmusic"
+}

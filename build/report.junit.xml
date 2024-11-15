@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/Projects/wwu/wwu/packages/laravel-oembed/phpunit.xml" tests="16" assertions="43" errors="0" failures="0" skipped="0" time="0.243206">
+    <testsuite name="Larafeed Test Suite" tests="16" assertions="43" errors="0" failures="0" skipped="0" time="0.243206">
+      <testsuite name="Tests\Feature\ParserTest" file="tests/Feature/ParserTest.php" tests="3" assertions="17" errors="0" failures="0" skipped="0" time="0.136563">
+        <testcase name="it expires cached urls" file="tests/Feature/ParserTest.php::it expires cached urls" class="Tests\Feature\ParserTest" classname="Tests.Feature.ParserTest" assertions="2" time="0.034132"/>
+        <testcase name="it caches urls" file="tests/Feature/ParserTest.php::it caches urls" class="Tests\Feature\ParserTest" classname="Tests.Feature.ParserTest" assertions="2" time="0.008268"/>
+        <testcase name="it returns oembed from url" file="tests/Feature/ParserTest.php::it returns oembed from url" class="Tests\Feature\ParserTest" classname="Tests.Feature.ParserTest" assertions="13" time="0.094163"/>
+      </testsuite>
+      <testsuite name="Tests\Feature\ProvidersTest" file="tests/Feature/ProvidersTest.php" tests="13" assertions="26" errors="0" failures="0" skipped="0" time="0.106643">
+        <testcase name="it retrieves oembed information for flickr" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for flickr" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.082551"/>
+        <testcase name="it retrieves oembed information for soundcloud" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for soundcloud" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.002507"/>
+        <testcase name="it retrieves oembed information for dailymotion" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for dailymotion" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.002077"/>
+        <testcase name="it retrieves oembed information for pinterest" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for pinterest" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001926"/>
+        <testcase name="it retrieves oembed information for twitter/x" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for twitter/x" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001957"/>
+        <testcase name="it retrieves oembed information for tiktok" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for tiktok" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001900"/>
+        <testcase name="it retrieves oembed information for vimeo" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for vimeo" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001914"/>
+        <testcase name="it retrieves oembed information for bluesky" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for bluesky" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001929"/>
+        <testcase name="it retrieves oembed information for youtube" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for youtube" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001994"/>
+        <testcase name="it retrieves oembed information for scribd" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for scribd" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001930"/>
+        <testcase name="it retrieves oembed information for spotify" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for spotify" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001967"/>
+        <testcase name="it retrieves oembed information for tumblr" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for tumblr" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.001979"/>
+        <testcase name="it retrieves oembed information for amazon" file="tests/Feature/ProvidersTest.php::it retrieves oembed information for amazon" class="Tests\Feature\ProvidersTest" classname="Tests.Feature.ProvidersTest" assertions="2" time="0.002012"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
