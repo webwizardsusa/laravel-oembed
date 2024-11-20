@@ -51,7 +51,10 @@
     "laravel": {
       "providers": [
         "Webwizardsusa\\OEmbed\\OEmbedServiceProvider"
-      ]
+      ],
+      "aliases": {
+        "OEmbed": "Webwizardsusa\\OEmbed\\Facades\\OEmbed"
+      }
     }
   },
   "minimum-stability": "dev",

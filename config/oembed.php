@@ -1,5 +1,8 @@
 <?php
 return [
+    /*
+     * An array of the provider classes to enable
+     */
     'providers' => [
         \Webwizardsusa\OEmbed\Providers\YoutubeProvider::class,
         \Webwizardsusa\OEmbed\Providers\TwitterProvider::class,
@@ -17,11 +20,30 @@ return [
     ],
 
     'cache' => [
-        'enabled' => env('OEMBED_ENABLE_CACHE', true), // Allow enabling/disabling caching
-        'ttl' => env('OEMBED_URL_CACHE_TTL', 60 * 24 * 7), // Default time-to-live in minutes
-        'invalid_ttl' => env('OEMBED_INVALID_URL_CACHE_TTL', 10), // Default time-to-live in minutes
-        'key_prefix' => env('OEMBED_CACHE_PREFIX', 'oembed_url_'), // Prefix for cache keys
-        'driver' => env('OEMBED_CACHE_DRIVER', null), // Optional cache driver
+        /*
+         * Enable or disable caching.
+         */
+        'enabled' => env('OEMBED_ENABLE_CACHE', true),
+
+        /*
+         * The number of minutes to store valid responses.
+         */
+        'ttl' => env('OEMBED_URL_CACHE_TTL', 60 * 24 * 7),
+
+        /*
+         * The number of minutes to cache invalid responses.
+         */
+        'invalid_ttl' => env('OEMBED_INVALID_URL_CACHE_TTL', 10),
+
+        /*
+         * The prefix to attach to the key of cached items.
+         */
+        'key_prefix' => env('OEMBED_CACHE_PREFIX', 'oembed_url_'),
+
+        /*
+         * The driver to use to cache responses.
+         */
+        'driver' => env('OEMBED_CACHE_DRIVER', null),
     ],
 
 ];

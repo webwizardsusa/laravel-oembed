@@ -10,6 +10,7 @@ class OEmbedServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/oembed.php', 'oembed');
+        $this->app->alias(OEmbed::class, 'oembed');
         $this->app->singleton(OEmbed::class, function(){
             return new OEmbed(config('oembed.providers', []));
         });
