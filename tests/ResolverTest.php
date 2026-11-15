@@ -3,9 +3,9 @@
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use Webwizardsusa\OEmbed\EmbedCache;
 use Webwizardsusa\OEmbed\Embedder;
 use Webwizardsusa\OEmbed\Resolver;
+use Webwizardsusa\OEmbed\Stores\StoreKey;
 use Webwizardsusa\OEmbed\Tests\TestCase;
 
 uses(TestCase::class);
@@ -44,7 +44,7 @@ it('fetches every uncached URL in one pool, and answers from the cache after tha
 it('remembers a failed lookup for the failure time only', function (): void {
     Http::preventStrayRequests();
     Http::fake(['www.youtube.com/oembed*' => Http::sequence()->push([], 404)->push(youtubeAnswer('Back'))]);
-    config(['oembed.cache.failure_ttl' => 60]);
+    config(['oembed.failure_ttl' => 60]);
 
     expect(embedResolver()->resolve('https://youtu.be/a'))->toBeNull()
         ->and(embedResolver()->resolve('https://youtu.be/a'))->toBeNull();
@@ -80,7 +80,7 @@ it('uses the configured cache store', function (): void {
 
     embedResolver()->resolve('https://youtu.be/a');
 
-    $key = EmbedCache::key('youtube', 'https://youtu.be/a', 800);
+    $key = 'oembed:'.StoreKey::make('youtube', 'https://youtu.be/a', 800);
 
     expect(Cache::store('embeds')->get($key))->toBeArray()
         ->and(Cache::store()->has($key))->toBeFalse();

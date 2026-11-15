@@ -2,17 +2,22 @@
 
 namespace Webwizardsusa\OEmbed;
 
+use Closure;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\HtmlString;
 use Webwizardsusa\OEmbed\Providers\BuiltInProviders;
 use Webwizardsusa\OEmbed\Providers\Provider;
 use Webwizardsusa\OEmbed\Providers\ProviderRegistry;
 use Webwizardsusa\OEmbed\Rendering\EmbedMarkup;
 use Webwizardsusa\OEmbed\Rendering\HtmlBuilder;
+use Webwizardsusa\OEmbed\Stores\EmbedStore;
+use Webwizardsusa\OEmbed\Stores\EmbedStoreManager;
 use Webwizardsusa\OEmbed\Support\Url;
 
 /**
- * Which URLs can be embedded and how: the providers, discovery, the `maxwidth` sent to providers and privacy-enhanced
- * YouTube. It looks URLs up ({@see resolve()}, {@see resolveMany()}) and renders them ({@see render()}).
+ * Which URLs can be embedded and how: the providers, discovery, the `maxwidth` sent to providers, privacy-enhanced
+ * YouTube and where answers are stored. It looks URLs up ({@see resolve()}, {@see resolveMany()}) and renders them
+ * ({@see render()}).
  *
  * A new one takes its defaults from `config/oembed.php`. The `OEmbed` facade gives a new one each time, so its fluent
  * methods never change another one's settings.
@@ -39,6 +44,11 @@ class Embedder
     protected bool $isPrivacyEnhancedYouTube;
 
     protected bool $discovers;
+
+    /**
+     * A store name from {@see EmbedStoreManager}, a store, or null for the default (`oembed.store`).
+     */
+    protected EmbedStore|string|null $store = null;
 
     public function __construct()
     {
@@ -121,6 +131,34 @@ class Embedder
         return $this;
     }
 
+    /**
+     * Where answers are kept: a store name (`cache`, `database`, or one added with {@see extend()}) or a store.
+     */
+    public function store(EmbedStore|string|null $store): static
+    {
+        $this->store = $store;
+
+        return $this;
+    }
+
+    /**
+     * Adds a store that {@see store()} and `OEMBED_STORE` can name, for every embedder:
+     * `OEmbed::extend('redis', fn ($app) => new RedisStore(…))`.
+     *
+     * @param  Closure(Container): EmbedStore  $creator
+     */
+    public function extend(string $name, Closure $creator): static
+    {
+        app(EmbedStoreManager::class)->extend($name, $creator);
+
+        return $this;
+    }
+
+    public function getStore(): EmbedStore
+    {
+        return $this->store instanceof EmbedStore ? $this->store : app(EmbedStoreManager::class)->store($this->store);
+    }
+
     public function isPrivacyEnhancedYouTube(): bool
     {
         return $this->isPrivacyEnhancedYouTube;
@@ -148,7 +186,7 @@ class Embedder
         return new Resolver(
             $this->getProviders(),
             OEmbedClient::fromConfig(),
-            EmbedCache::fromConfig(),
+            $this->getStore(),
             $this->maxWidth,
             $this->discovers ? Discovery::fromConfig() : null,
         );

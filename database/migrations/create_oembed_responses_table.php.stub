@@ -1,0 +1,26 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::connection(config('oembed.database.connection'))->create(config('oembed.database.table', 'oembed_responses'), function (Blueprint $table): void {
+            $table->id();
+            $table->char('key', 40)->unique();
+            $table->text('url');
+            // The answer as JSON, or null for a failed lookup.
+            $table->longText('response')->nullable();
+            $table->timestamp('expires_at')->index();
+            $table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::connection(config('oembed.database.connection'))->dropIfExists(config('oembed.database.table', 'oembed_responses'));
+    }
+};

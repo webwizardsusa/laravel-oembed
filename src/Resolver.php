@@ -4,10 +4,12 @@ namespace Webwizardsusa\OEmbed;
 
 use Webwizardsusa\OEmbed\Providers\Provider;
 use Webwizardsusa\OEmbed\Providers\ProviderRegistry;
+use Webwizardsusa\OEmbed\Stores\EmbedStore;
+use Webwizardsusa\OEmbed\Stores\StoreKey;
 
 /**
- * Looks URLs up through their providers: answers come from the cache when they can, and the rest are fetched together
- * in one pool and cached.
+ * Looks URLs up through their providers: answers come from the store when they can, and the rest are fetched together
+ * in one pool and stored.
  *
  * With {@see Discovery}, URLs no provider takes are looked up through the oEmbed endpoint their page names. Pages are
  * fetched one at a time, so at most {@see MAX_DISCOVERIES} uncached ones are discovered per call; the rest answer
@@ -20,7 +22,7 @@ class Resolver
     public function __construct(
         protected ProviderRegistry $providers,
         protected OEmbedClient $client,
-        protected EmbedCache $cache,
+        protected EmbedStore $store,
         protected ?int $maxWidth = null,
         protected ?Discovery $discovery = null,
     ) {}
@@ -45,9 +47,9 @@ class Resolver
             $provider = $this->providers->match($url);
 
             if ($provider !== null) {
-                $requests[EmbedCache::key($provider->getName(), $url, $this->maxWidth)] = ['provider' => $provider, 'url' => $url];
+                $requests[StoreKey::make($provider->getName(), $url, $this->maxWidth)] = ['provider' => $provider, 'url' => $url];
             } elseif ($this->discovery !== null) {
-                $discoverable[EmbedCache::key('discovered', $url, $this->maxWidth)] = $url;
+                $discoverable[StoreKey::make('discovered', $url, $this->maxWidth)] = $url;
             }
         }
 
@@ -61,11 +63,11 @@ class Resolver
     protected function resolveFromProviders(array $requests): array
     {
         $answers = [];
-        $cached = $this->cache->getMany(array_keys($requests));
+        $cached = $this->store->getMany(array_keys($requests));
         $missing = array_diff_key($requests, $cached);
 
         foreach ($this->client->fetchMany($missing, $this->maxWidth) as $key => $response) {
-            $this->cache->put($key, $response);
+            $this->store->put($key, $missing[$key]['url'], $response);
             $cached[$key] = $response ?? false;
         }
 
@@ -86,12 +88,12 @@ class Resolver
             return [];
         }
 
-        $cached = $this->cache->getMany(array_keys($urls));
+        $cached = $this->store->getMany(array_keys($urls));
         $answers = [];
 
         foreach (array_slice(array_diff_key($urls, $cached), 0, static::MAX_DISCOVERIES, true) as $key => $url) {
             $response = $this->discovery->discover($url, $this->maxWidth);
-            $this->cache->put($key, $response);
+            $this->store->put($key, $url, $response);
             $cached[$key] = $response ?? false;
         }
 

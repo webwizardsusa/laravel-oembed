@@ -48,7 +48,8 @@ OEmbed::resolveMany($urls);            // [url => ?Embed], looked up at once
 OEmbed::takes($url);                   // whether a provider (or discovery) takes the URL
 ```
 
-Answers are cached, failed lookups included. `resolveMany()` looks every uncached URL up in one pooled request.
+Answers are stored, failed lookups included (see [Storage](#storage)). `resolveMany()` looks every URL it hasn't
+stored up in one pooled request.
 
 ## Settings
 
@@ -81,11 +82,39 @@ OEmbed::withoutProviders(['tiktok'])
   `<blockquote>` into an embed.
 - **`privacyEnhancedYouTube()`** plays YouTube from `www.youtube-nocookie.com`.
 
-Publish the config to change the app's defaults: the cache store, how long answers are kept, the timeout,
-`maxwidth`, discovery and privacy-enhanced YouTube.
+Publish the config to change the app's defaults: the store, how long answers are kept, the timeout, `maxwidth`,
+discovery and privacy-enhanced YouTube.
 
 ```bash
 php artisan vendor:publish --tag=oembed-config
+```
+
+## Storage
+
+Answers are kept between lookups: for a week (`oembed.ttl`), and a failed lookup for ten minutes
+(`oembed.failure_ttl`), so a deleted video isn't asked about on every page view. Two stores come with the package:
+
+- **`cache`** (the default) keeps answers in a Laravel cache store: `OEMBED_CACHE_STORE`, or your default store.
+- **`database`** keeps them in an `oembed_responses` table, one row per URL with the answer as JSON. The migration
+  isn't run from the package; publish it, then migrate:
+
+  ```bash
+  php artisan vendor:publish --tag=oembed-migrations
+  php artisan migrate
+  ```
+
+  Then set `OEMBED_STORE=database`. Expired rows are ignored, and `php artisan oembed:prune` deletes them, so
+  schedule it daily: `Schedule::command('oembed:prune')->daily();`
+
+One embedder can use another store with `->store('database')`. To keep answers somewhere else, implement
+`Webwizardsusa\OEmbed\Stores\EmbedStore` (`getMany()`, `put()` and `forget()`), add it, and name it in
+`OEMBED_STORE` or `->store()`:
+
+```php
+use Webwizardsusa\OEmbed\Facades\OEmbed;
+
+// In a service provider's boot():
+OEmbed::extend('redis', fn ($app) => new RedisEmbedStore($app['redis']->connection()));
 ```
 
 ## Discovery
