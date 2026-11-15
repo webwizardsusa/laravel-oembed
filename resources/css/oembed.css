@@ -1,0 +1,9 @@
+/*
+ * Rendered embeds, as Embedder::render() writes them: responsive players, photos and captions.
+ */
+.oembed{margin:1rem 0;max-width:100%}
+.oembed-frame iframe{display:block;width:100%;max-width:100%;border:0}
+.oembed-frame[style*="aspect-ratio"] iframe{height:100%}
+.oembed[data-kind="photo"] img{display:block;max-width:100%;height:auto}
+.oembed blockquote{margin:0}
+.oembed figcaption{font-size:.875em;opacity:.8;margin-top:.375rem}

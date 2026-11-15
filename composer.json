@@ -1,0 +1,73 @@
+{
+    "name": "webwizardsusa/laravel-oembed",
+    "description": "oEmbed for Laravel: turn YouTube, Vimeo, X and other URLs into safe embeds, with optional oEmbed discovery and Filament fields.",
+    "keywords": [
+        "laravel",
+        "oembed",
+        "embed",
+        "filament",
+        "filament-plugin",
+        "webwizardsusa"
+    ],
+    "homepage": "https://github.com/webwizardsusa/laravel-oembed",
+    "support": {
+        "issues": "https://github.com/webwizardsusa/laravel-oembed/issues",
+        "source": "https://github.com/webwizardsusa/laravel-oembed"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jamie Holly",
+            "email": "jamie@webwizardsusa.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/cache": "^12.0 || ^13.0",
+        "illuminate/contracts": "^12.0 || ^13.0",
+        "illuminate/http": "^12.0 || ^13.0",
+        "illuminate/support": "^12.0 || ^13.0",
+        "illuminate/view": "^12.0 || ^13.0",
+        "spatie/laravel-package-tools": "^1.92"
+    },
+    "require-dev": {
+        "filament/filament": "^5.0",
+        "orchestra/testbench": "^11.0",
+        "pestphp/pest": "^5.2",
+        "pestphp/pest-plugin-laravel": "^5.0"
+    },
+    "suggest": {
+        "filament/filament": "For the OEmbedInput form field, OEmbedEntry infolist entry and OEmbedColumn table column."
+    },
+    "autoload": {
+        "psr-4": {
+            "Webwizardsusa\\OEmbed\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Webwizardsusa\\OEmbed\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webwizardsusa\\OEmbed\\OEmbedServiceProvider"
+            ],
+            "aliases": {
+                "OEmbed": "Webwizardsusa\\OEmbed\\Facades\\OEmbed"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

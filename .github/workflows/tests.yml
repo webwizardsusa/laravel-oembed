@@ -1,0 +1,59 @@
+name: tests
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+
+jobs:
+    php:
+        name: PHP ${{ matrix.php }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                php: ['8.4', '8.5']
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: dom, intl
+                  coverage: none
+
+            - run: composer install --no-interaction --no-progress
+
+            - run: vendor/bin/pest
+
+    without-filament:
+        name: Without Filament
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.4'
+                  extensions: dom, intl
+                  coverage: none
+
+            # Filament is optional: the core must install and work without it. Its tests are skipped.
+            - run: composer remove --dev filament/filament --no-interaction --no-progress
+
+            - run: vendor/bin/pest
+
+    php-83:
+        name: PHP 8.3 syntax
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: '8.3'
+                  coverage: none
+
+            # Pest 5 needs PHP 8.4, so on 8.3 the source is only checked to parse.
+            - run: find src config resources/lang -name '*.php' -print0 | xargs -0 -n1 php -l
