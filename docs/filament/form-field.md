@@ -58,16 +58,16 @@ OEmbedInput::make('video_url')->preview(false);
 | Value | Shows |
 |---|---|
 | `'card'` | A card with the thumbnail, the provider's label, the title and the URL. Only the thumbnail is loaded from the provider. |
-| `'embed'` | The embed itself, as [`render()`](../usage/embedder.md#rendering) writes it: the player, post or photo. |
+| `'embed'` | The embed itself, as [`render()`](../usage/embedder.md#rendering) writes it: the player or photo. Posts that need their provider's script (X, Bluesky), and URLs that would only show their link, show the card instead. |
 | `false` | Nothing. |
 
 Any other value turns the preview off. Nothing is shown while the field is empty, or when the URL has nothing to
 embed (the validation error explains why).
 
-With `'embed'`, the panel loads the providers' players, and X and Bluesky posts include their provider's script. If
-your panel sends a Content Security Policy, it needs the hosts listed in
-[Content Security Policy](../security/content-security-policy.md). With `'card'`, it only needs the thumbnail hosts in
-`img-src`.
+With `'embed'`, the panel loads the providers' players, but never their scripts: third-party scripts are not run in
+the panel, so X and Bluesky posts are previewed as their card. If your panel sends a Content Security Policy, it needs
+the `frame-src` hosts listed in [Content Security Policy](../security/content-security-policy.md), plus the thumbnail
+hosts in `img-src` for the cards. With `'card'`, it only needs the thumbnail hosts.
 
 ### Helper text and `belowContent()`
 
