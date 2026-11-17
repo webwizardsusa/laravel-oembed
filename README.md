@@ -29,7 +29,7 @@ OEmbedInput::make('video_url')->required();
 
 ## Documentation
 
-Read the full documentation at [https://DOCS_SITE_URL/docs/laravel-oembed](https://DOCS_SITE_URL/docs/laravel-oembed).
+Read the full documentation in the [`docs` folder](https://github.com/webwizardsusa/laravel-oembed/tree/main/docs).
 
 ## License
 
