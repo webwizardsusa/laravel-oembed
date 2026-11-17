@@ -15,7 +15,8 @@ use Webwizardsusa\OEmbed\Support\Url;
 /**
  * A URL field for something to embed. It stores the URL as a string, refuses URLs that can't be embedded, and shows
  * a preview under the field once the URL is entered: a card with the thumbnail and title (the default), the embed
- * itself (`->preview('embed')`), or nothing (`->preview(false)`). The preview uses `belowContent()`, so don't set that
+ * itself (`->preview('embed')`; posts that need their provider's script, such as X and Bluesky, still show their card,
+ * because third-party scripts are not run in the panel), or nothing (`->preview(false)`). The preview uses `belowContent()`, so don't set that
  * yourself; `helperText()` still works.
  */
 class OEmbedInput extends TextInput
@@ -68,7 +69,8 @@ class OEmbedInput extends TextInput
     }
 
     /**
-     * `'card'` (the default), `'embed'`, or `false` for no preview.
+     * `'card'` (the default), `'embed'`, or `false` for no preview. With `'embed'`, a post that needs its provider's
+     * script, or an embed that would only show its link, is previewed as its card.
      */
     public function preview(string|false $preview): static
     {
@@ -95,7 +97,13 @@ class OEmbedInput extends TextInput
         }
 
         if ($this->preview === 'embed') {
-            return new HtmlString('<div class="oembed-preview">'.$embed->toHtml().'</div>');
+            $html = $embed->toHtml();
+
+            // Posts that need their provider's script (X, Bluesky) and embeds that would only show their link are
+            // previewed as their card: third-party scripts are not run in the panel.
+            if (str_contains($html, 'data-kind="') && ! str_contains($html, '<script')) {
+                return new HtmlString('<div class="oembed-preview">'.$html.'</div>');
+            }
         }
 
         return new HtmlString(static::card($embed));

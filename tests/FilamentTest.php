@@ -136,6 +136,19 @@ it('shows the embed itself as the preview, or no preview', function (): void {
         ->assertDontSeeHtml('<iframe');
 });
 
+it('previews a post that needs its provider\'s script as its card, without the script', function (): void {
+    Http::fake(['publish.x.com/oembed*' => Http::response([
+        'type' => 'rich', 'title' => 'A post', 'provider_name' => 'X',
+        'html' => '<blockquote class="twitter-tweet"><p>Hello</p></blockquote><script async src="https://platform.x.com/widgets.js"></script>',
+    ])]);
+
+    Livewire::test(OEmbedTestForm::class, ['preview' => 'embed'])
+        ->fillForm(['video' => 'https://x.com/jack/status/20'])
+        ->assertSeeHtml('<span class="oembed-card-title">A post</span>')
+        ->assertDontSeeHtml('<blockquote')
+        ->assertDontSeeHtml('platform.x.com/widgets.js');
+});
+
 it('refuses a URL it cannot embed', function (string $url, string $message): void {
     Livewire::test(OEmbedTestForm::class)
         ->fillForm(['video' => $url])

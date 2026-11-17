@@ -150,7 +150,8 @@ The field stores the URL as a string, so a `string` column is all it needs.
 
 - **`OEmbedInput`** refuses URLs that can't be embedded, and shows a preview under the field: a card with the
   thumbnail and title, `->preview('embed')` for the player itself, or `->preview(false)` for none. `helperText()`
-  shows above the preview.
+  shows above the preview. The `embed` preview runs no provider scripts in the panel: posts that need one (X,
+  Bluesky) show their card.
 - **`OEmbedEntry`** shows the embed, or its link when there is nothing to embed.
 - **`OEmbedColumn`** shows the thumbnail and title. It looks up every row's URL on the page at once.
 
