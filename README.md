@@ -1,5 +1,12 @@
 # Laravel oEmbed
 
+[![Latest version on Packagist](https://img.shields.io/packagist/v/webwizardsusa/laravel-oembed.svg)](https://packagist.org/packages/webwizardsusa/laravel-oembed)
+[![Tests](https://github.com/webwizardsusa/laravel-oembed/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/webwizardsusa/laravel-oembed/actions/workflows/tests.yml)
+[![Total downloads](https://img.shields.io/packagist/dt/webwizardsusa/laravel-oembed.svg)](https://packagist.org/packages/webwizardsusa/laravel-oembed/stats)
+[![PHP version](https://img.shields.io/packagist/dependency-v/webwizardsusa/laravel-oembed/php.svg)](https://packagist.org/packages/webwizardsusa/laravel-oembed)
+[![Laravel version](https://img.shields.io/packagist/dependency-v/webwizardsusa/laravel-oembed/illuminate/support.svg?label=Laravel)](https://laravel.com)
+[![License](https://img.shields.io/packagist/l/webwizardsusa/laravel-oembed.svg)](https://github.com/webwizardsusa/laravel-oembed/blob/main/LICENSE.md)
+
 Turn YouTube, Vimeo, X and other URLs into embeds in Laravel, safely. The provider's HTML is never output as it
 came: players are rebuilt from the provider's own hosts, posts from their text and links, and anything else shows as
 a link. Answers are kept in swappable stores (the cache, a database table, or your own), optional oEmbed discovery
