@@ -48,6 +48,20 @@ it('keeps a portrait video no wider than it is', function (): void {
     expect(Embedder::make()->render('https://youtu.be/abc')->toHtml())->toContain('style="aspect-ratio: 325 / 578; max-width: 325px"');
 });
 
+it('plays TikTok videos in TikTok\'s own player', function (): void {
+    Http::preventStrayRequests();
+    Http::fake(['www.tiktok.com/oembed*' => Http::response([
+        'type' => 'video', 'width' => '325', 'height' => '578', 'provider_name' => 'TikTok',
+        'html' => '<iframe height="578" width="325" src="https://www.tiktok.com/player/v1/6718335390845095173?embed_from=oembed" frameborder="0" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>',
+    ])]);
+
+    expect(Embedder::make()->render('https://www.tiktok.com/@scout2015/video/6718335390845095173')->toHtml())->toBe(
+        '<figure class="oembed" data-kind="video"><div class="oembed-frame" style="aspect-ratio: 325 / 578; max-width: 325px">'
+        .'<iframe src="https://www.tiktok.com/player/v1/6718335390845095173?embed_from=oembed" width="325" height="578" allow="autoplay; fullscreen" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>'
+        .'</div></figure>',
+    );
+});
+
 it('renders the link instead of a player the provider may not load', function (string $html): void {
     fakeYouTubeAnswer(videoAnswerWith($html));
 
