@@ -1,7 +1,7 @@
 # Laravel oEmbed
 
-> **Under active development.** This package is still changing and may not be ready for production use yet. Until
-> 1.0, a minor release can include breaking changes, so check the changelog before you upgrade.
+> **Under active development.** This package is still changing and may not be ready for production use yet. Breaking
+> changes only come in major releases, so check the changelog before you upgrade across one.
 
 [![Latest version on Packagist](https://img.shields.io/packagist/v/webwizardsusa/laravel-oembed.svg)](https://packagist.org/packages/webwizardsusa/laravel-oembed)
 [![Tests](https://github.com/webwizardsusa/laravel-oembed/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/webwizardsusa/laravel-oembed/actions/workflows/tests.yml)
